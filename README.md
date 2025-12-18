@@ -1,5 +1,5 @@
 # The-Perfect-Board-Game
-Projekt Drools wykonany na potrzeby zajęć ze sztucznej inteligencji na kierunku informatyka na Politechnice Poznańskiej.
+Projekt Drools wykonany na potrzeby zajęć ze sztucznej inteligencji na kierunku informatyka na Politechnice Poznańskiej w roku akademickim 2025/2026.
 
 Folder GryPlanszowe zawiera cały projekt, gotowy do importu w Eclipse IDE. Projekt działa dla Java JDK 11 oraz Runtime Drools 7.46 pobranych z E-Kursów.
 
