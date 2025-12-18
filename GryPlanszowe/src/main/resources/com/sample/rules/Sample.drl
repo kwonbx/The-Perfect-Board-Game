@@ -1,0 +1,973 @@
+package com.sample.rules
+
+import com.sample.QuestionAndAnswer
+import java.util.ArrayList
+import com.sample.GuiHelper
+
+global GuiHelper helper
+
+rule "Start"
+    when
+    then
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No"); 
+        options.add("EXIT");
+        QuestionAndAnswer answer = helper.ask("Are you playing with children?", options);
+        insert(answer);
+end
+
+rule "Check under 7"
+    when
+        QuestionAndAnswer(question == "Are you playing with children?" && answer == "Yes")
+    then
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        QuestionAndAnswer answer = helper.ask("Younger than 7?", options);
+        insert(answer);
+end
+
+rule "Check girls"
+    when
+    	QuestionAndAnswer(question == "Younger than 7?" && answer == "Yes")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Girly girls only?", options);
+	    insert(answer);
+end
+
+
+rule "Candy Land"
+    when
+    	QuestionAndAnswer(question == "Girly girls only?" && answer == "Yes")
+    then
+    	helper.showResult("Candy Land");
+end
+
+rule "Check rules or fun"
+    when
+    	QuestionAndAnswer(question == "Girly girls only?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Rules");
+	    options.add("Fun");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Real rules or just fun?", options);
+	    insert(answer);
+end
+
+rule "Check fun for adults"
+    when
+    	QuestionAndAnswer(question == "Real rules or just fun?" && answer == "Rules")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Actually fun for adults?", options);
+	    insert(answer);
+end
+
+rule "Sorry!"
+    when
+    	QuestionAndAnswer(question == "Actually fun for adults?" && answer == "Yes")
+    then
+    	helper.showResult("Sorry!");
+end
+
+
+rule "Life"
+    when
+    	QuestionAndAnswer(question == "Actually fun for adults?" && answer == "No")
+    then
+    	helper.showResult("Life");
+end
+
+
+rule "Check Rube Goldberg"
+    when
+    	QuestionAndAnswer(question == "Real rules or just fun?" && answer == "Fun")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Rube Goldberg?", options);
+	    insert(answer);
+end
+
+rule "Mouse Trap"
+    when
+    	QuestionAndAnswer(question == "Rube Goldberg?" && answer == "Yes")
+    then
+    	helper.showResult("Mouse Trap");
+end
+
+
+rule "Operation"
+    when
+    	QuestionAndAnswer(question == "Rube Goldberg?" && answer == "No")
+    then
+    	helper.showResult("Operation");
+end
+
+
+rule "Check crushing defeat"
+    when
+    	QuestionAndAnswer(question == "Younger than 7?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Let them experience crushing defeat?", options);
+	    insert(answer);
+end
+
+rule "Monopoly"
+    when
+    	QuestionAndAnswer(question == "Let them experience crushing defeat?" && answer == "Yes")
+    then
+    	helper.showResult("Monopoly");
+end
+
+
+rule "Check portable"
+    when
+    	QuestionAndAnswer(question == "Let them experience crushing defeat?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Portable?", options);
+	    insert(answer);
+end
+
+rule "Yahtzee!"
+    when
+    	QuestionAndAnswer(question == "Portable?" && answer == "Yes")
+    then
+    	helper.showResult("Yahtzee!");
+end
+
+
+rule "Check one winner or a team"
+    when
+    	QuestionAndAnswer(question == "Portable?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("One");
+	    options.add("Team");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("One winner or a team effort?", options);
+	    insert(answer);
+end
+
+rule "Small World"
+    when
+    	QuestionAndAnswer(question == "One winner or a team effort?" && answer == "One")
+    then
+    	helper.showResult("Small World");
+end
+
+
+rule "Forbidden Island"
+    when
+    	QuestionAndAnswer(question == "One winner or a team effort?" && answer == "Team")
+    then
+    	helper.showResult("Forbidden Island");
+end
+
+
+rule "Check more than two hours"
+    when
+    	QuestionAndAnswer(question == "Are you playing with children?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Play for more than two hours?", options);
+	    insert(answer);
+end
+
+rule "Check hardest rules"
+    when
+    	QuestionAndAnswer(question == "Play for more than two hours?" && answer == "Yes")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Hardest rules ever?", options);
+	    insert(answer);
+end
+
+rule "Axis and Allies"
+    when
+    	QuestionAndAnswer(question == "Hardest rules ever?" && answer == "Yes")
+    then
+    	helper.showResult("Axis and Allies");
+end
+
+
+rule "Check all players"
+    when
+    	QuestionAndAnswer(question == "Hardest rules ever?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("All players in until the end?", options);
+	    insert(answer);
+end
+
+rule "Le Havre"
+    when
+    	QuestionAndAnswer(question == "All players in until the end?" && answer == "Yes")
+    then
+    	helper.showResult("Le Havre");
+end
+
+
+rule "Check dice or strategy"
+    when
+    	QuestionAndAnswer(question == "All players in until the end?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Strat");
+	    options.add("Dice");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Dice battles or 100% strategy?", options);
+	    insert(answer);
+end
+
+rule "Game of Thrones"
+    when
+    	QuestionAndAnswer(question == "Dice battles or 100% strategy?" && answer == "Strat")
+    then
+    	helper.showResult("Game of Thrones");
+end
+
+
+rule "Risk"
+    when
+    	QuestionAndAnswer(question == "Dice battles or 100% strategy?" && answer == "Dice")
+    then
+    	helper.showResult("Risk");
+end
+
+
+rule "Check huge nerd"
+    when
+    	QuestionAndAnswer(question == "Play for more than two hours?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Are you a huge nerd?", options);
+	    insert(answer);
+end
+
+rule "Check dozens of hours"
+    when
+    	QuestionAndAnswer(question == "Are you a huge nerd?" && answer == "Yes")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Do you want to spend dozens of hours preparing to play?", options);
+	    insert(answer);
+end
+
+rule "Warhammer"
+    when
+    	QuestionAndAnswer(question == "Do you want to spend dozens of hours preparing to play?" && answer == "Yes")
+    then
+    	helper.showResult("Warhammer");
+end
+
+
+rule "Check spending money"
+    when
+    	QuestionAndAnswer(question == "Do you want to spend dozens of hours preparing to play?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Do you like spending money?", options);
+	    insert(answer);
+end
+
+rule "Magic"
+    when
+    	QuestionAndAnswer(question == "Do you like spending money?" && answer == "Yes")
+    then
+    	helper.showResult("Magic");
+end
+
+
+rule "Check boomer"
+    when
+    	QuestionAndAnswer(question == "Do you like spending money?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Does the name boomer give you wet dreams?", options);
+	    insert(answer);
+end
+
+rule "Battlestar Galactica"
+    when
+    	QuestionAndAnswer(question == "Does the name boomer give you wet dreams?" && answer == "Yes")
+    then
+    	helper.showResult("Battlestar Galactica");
+end
+
+
+rule "Cosmic Encounter"
+    when
+    	QuestionAndAnswer(question == "Does the name boomer give you wet dreams?" && answer == "No")
+    then
+    	helper.showResult("Cosmic Encounter");
+end
+
+
+rule "Check everyone get along"
+    when
+    	QuestionAndAnswer(question == "Are you a huge nerd?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Do you think everyone should just get along?", options);
+	    insert(answer);
+end
+
+rule "Check dick"
+    when
+    	QuestionAndAnswer(question == "Do you think everyone should just get along?" && answer == "Yes")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Do you secretly wish you were a dick?", options);
+    	insert(answer);
+end
+
+rule "Arkham Horror"
+    when
+    	QuestionAndAnswer(question == "Do you secretly wish you were a dick?" && answer == "Yes")
+    then
+    	helper.showResult("Arkham Horror");
+end
+
+
+rule "Check Monty Python fetish"
+    when
+    	QuestionAndAnswer(question == "Do you secretly wish you were a dick?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Do you have a Monty Python Fetish?", options);
+	    insert(answer);
+end
+
+rule "Shadows over Camelot"
+    when
+    	QuestionAndAnswer(question == "Do you have a Monty Python Fetish?" && answer == "Yes")
+    then
+    	helper.showResult("Shadows over Camelot");
+end
+
+
+rule "Check zombies"
+    when
+    	QuestionAndAnswer(question == "Do you have a Monty Python Fetish?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Zombies?", options);
+	    insert(answer);
+end
+
+rule "Last Night on Earth"
+    when
+    	QuestionAndAnswer(question == "Zombies?" && answer == "Yes")
+    then
+    	helper.showResult("Last Night on Earth");
+end
+
+
+rule "Check monsters or viruses"
+    when
+    	QuestionAndAnswer(question == "Zombies?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Virus");
+	    options.add("Monster");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Would you rather fight monsters or viruses?", options);
+	    insert(answer);
+end
+
+rule "Pandemic"
+    when
+    	QuestionAndAnswer(question == "Would you rather fight monsters or viruses?" && answer == "Virus")
+    then
+    	helper.showResult("Pandemic");
+end
+
+
+rule "Dungeon Run"
+    when
+    	QuestionAndAnswer(question == "Would you rather fight monsters or viruses?" && answer == "Monster")
+    then
+    	helper.showResult("Dungeon Run");
+end
+
+
+rule "Check gamble"
+    when
+    	QuestionAndAnswer(question == "Do you think everyone should just get along?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Do you like to gamble?", options);
+	    insert(answer);
+end
+
+rule "Rummoli"
+    when
+    	QuestionAndAnswer(question == "Do you like to gamble?" && answer == "Yes")
+    then
+    	helper.showResult("Rummoli");
+end
+
+
+rule "Check over 50"
+    when
+    	QuestionAndAnswer(question == "Do you like to gamble?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Are you over 50 years old?", options);
+	    insert(answer);
+end
+
+rule "Check more than two"
+    when
+    	QuestionAndAnswer(question == "Are you over 50 years old?" && answer == "Yes")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("More than two of you?", options);
+	    insert(answer);
+end
+
+rule "Cribbage"
+    when
+    	QuestionAndAnswer(question == "More than two of you?" && answer == "Yes")
+    then
+    	helper.showResult("Cribbage");
+end
+
+
+rule "Check Mensa"
+    when
+    	QuestionAndAnswer(question == "More than two of you?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Are you in Mensa?", options);
+	    insert(answer);
+end
+
+rule "Check chess"
+    when
+    	QuestionAndAnswer(question == "Are you in Mensa?" && answer == "Yes")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Chess too cliche?", options);
+	    insert(answer);
+end
+
+rule "Go"
+    when
+    	QuestionAndAnswer(question == "Chess too cliche?" && answer == "Yes")
+    then
+    	helper.showResult("Go");
+end
+
+
+rule "Chess"
+    when
+    	QuestionAndAnswer(question == "Chess too cliche?" && answer == "No")
+    then
+    	helper.showResult("Chess");
+end
+
+
+rule "Backgammon"
+    when
+    	QuestionAndAnswer(question == "Are you in Mensa?" && answer == "No")
+    then
+    	helper.showResult("Backgammon");
+end
+
+
+rule "Check party game"
+    when
+    	QuestionAndAnswer(question == "Are you over 50 years old?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Party game?", options);
+	    insert(answer);
+end
+
+rule "Check get laid"
+    when
+    	QuestionAndAnswer(question == "Party game?" && answer == "Yes")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Looking to get laid?", options);
+	    insert(answer);
+end
+
+rule "Twister"
+    when
+    	QuestionAndAnswer(question == "Looking to get laid?" && answer == "Yes")
+    then
+    	helper.showResult("Twister");
+end
+
+
+rule "Check embarrass friends"
+    when
+    	QuestionAndAnswer(question == "Looking to get laid?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Want to embarrass your friends?", options);
+	    insert(answer);
+end
+
+rule "Check thug or artist"
+    when
+    	QuestionAndAnswer(question == "Want to embarrass your friends?" && answer == "Yes")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Thug");
+	    options.add("Artist");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Do you want to be a thug or an artist?", options);
+	    insert(answer);
+end
+
+rule "Ca$h'N'Gun$"
+    when
+    	QuestionAndAnswer(question == "Do you want to be a thug or an artist?" && answer == "Thug")
+    then
+    	helper.showResult("Ca$h'N'Gun$");
+end
+
+
+rule "Cranium"
+    when
+    	QuestionAndAnswer(question == "Do you want to be a thug or an artist?" && answer == "Artist")
+    then
+    	helper.showResult("Cranium");
+end
+
+
+rule "Check creative liar"
+    when
+    	QuestionAndAnswer(question == "Want to embarrass your friends?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Are you a creative liar?", options);
+	    insert(answer);
+end
+
+rule "Check words or trivia"
+    when
+    	QuestionAndAnswer(question == "Are you a creative liar?" && answer == "Yes")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Words");
+	    options.add("Trivia");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Words or trivia?", options);
+	    insert(answer);
+end
+
+rule "Beyond Balderdash"
+    when
+    	QuestionAndAnswer(question == "Words or trivia?" && answer == "Words")
+    then
+    	helper.showResult("Beyond Balderdash");
+end
+
+
+rule "Wits and Wagers"
+    when
+    	QuestionAndAnswer(question == "Words or trivia?" && answer == "Trivia")
+    then
+    	helper.showResult("Wits and Wagers");
+end
+
+
+rule "Check good with hands"
+    when
+    	QuestionAndAnswer(question == "Are you a creative liar?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Good with your hands?", options);
+	    insert(answer);
+end
+
+rule "Jenga"
+    when
+    	QuestionAndAnswer(question == "Good with your hands?" && answer == "Yes")
+    then
+    	helper.showResult("Jenga (DK Edition)");
+end
+
+
+rule "Taboo"
+    when
+    	QuestionAndAnswer(question == "Good with your hands?" && answer == "No")
+    then
+    	helper.showResult("Taboo");
+end
+
+
+rule "Check know it all"
+    when
+    	QuestionAndAnswer(question == "Party game?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Are you a know it all?", options);
+	    insert(answer);
+end
+
+rule "Trivial Persuit"
+    when
+    	QuestionAndAnswer(question == "Are you a know it all?" && answer == "Yes")
+    then
+    	helper.showResult("Trivial Persuit");
+end
+
+
+rule "Check straight As"
+    when
+    	QuestionAndAnswer(question == "Are you a know it all?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Get straight As?", options);
+	    insert(answer);
+end
+
+rule "Scrabble"
+    when
+    	QuestionAndAnswer(question == "Get straight As?" && answer == "Yes")
+    then
+    	helper.showResult("Scrabble");
+end
+
+
+rule "Check train fetish"
+    when
+    	QuestionAndAnswer(question == "Get straight As?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Do you have a train fetish?", options);
+	    insert(answer);
+end
+
+rule "Check economics"
+    when
+    	QuestionAndAnswer(question == "Do you have a train fetish?" && answer == "Yes")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Do you enjoy economics?", options);
+	    insert(answer);
+end
+
+rule "Steam"
+    when
+    	QuestionAndAnswer(question == "Do you enjoy economics?" && answer == "Yes")
+    then
+    	helper.showResult("Steam");
+end
+
+
+rule "Ticket to Ride"
+    when
+    	QuestionAndAnswer(question == "Do you enjoy economics?" && answer == "No")
+    then
+    	helper.showResult("Ticket to Ride");
+end
+
+
+rule "Chech simple rules"
+    when
+    	QuestionAndAnswer(question == "Do you have a train fetish?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Simple rules?", options);
+	    insert(answer);
+end
+
+rule "Check words or tiles"
+    when
+    	QuestionAndAnswer(question == "Simple rules?" && answer == "Yes")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Tiles");
+	    options.add("Words");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Words or tiles?", options);
+	    insert(answer);
+end
+
+rule "Qwirkle"
+    when
+    	QuestionAndAnswer(question == "Words or tiles?" && answer == "Tiles")
+    then
+    	helper.showResult("Qwirkle");
+end
+
+
+rule "Scattergories"
+    when
+    	QuestionAndAnswer(question == "Words or tiles?" && answer == "Words")
+    then
+    	helper.showResult("Scattergories");
+end
+
+
+rule "Check hard choices"
+    when
+    	QuestionAndAnswer(question == "Simple rules?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Constant hard choices?", options);
+	    insert(answer);
+end
+
+rule "Check farming fetish?"
+    when
+    	QuestionAndAnswer(question == "Constant hard choices?" && answer == "Yes")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Farming fetish?", options);
+	    insert(answer);
+end
+
+rule "Agricola"
+    when
+    	QuestionAndAnswer(question == "Farming fetish?" && answer == "Yes")
+    then
+    	helper.showResult("Agricola");
+end
+
+
+rule "Check two games"
+    when
+    	QuestionAndAnswer(question == "Farming fetish?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Do you mind having to buy two games?", options);
+	    insert(answer);
+end
+
+rule "Check board game geeks"
+    when
+    	QuestionAndAnswer(question == "Do you mind having to buy two games?" && answer == "Yes")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Are all players serious board game geeks?", options);
+	    insert(answer);
+end
+
+rule "Puerto Rico"
+    when
+    	QuestionAndAnswer(question == "Are all players serious board game geeks?" && answer == "Yes")
+    then
+    	helper.showResult("Puerto Rico");
+end
+
+
+rule "Domaine"
+    when
+    	QuestionAndAnswer(question == "Are all players serious board game geeks?" && answer == "No")
+    then
+    	helper.showResult("Domaine");
+end
+
+
+rule "Cities and Knights"
+    when
+    	QuestionAndAnswer(question == "Do you mind having to buy two games?" && answer == "No")
+    then
+    	helper.showResult("Cities and Knights");
+end
+
+
+rule "Check card/deck"
+    when
+    	QuestionAndAnswer(question == "Constant hard choices?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Card/deck based game?", options);
+	    insert(answer);
+end
+
+rule "Check complexity"
+    when
+    	QuestionAndAnswer(question == "Card/deck based game?" && answer == "Yes")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("More");
+	    options.add("Less");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Complexity?", options);
+	    insert(answer);
+end
+
+rule "7 Wonders"
+    when
+    	QuestionAndAnswer(question == "Complexity?" && answer == "More")
+    then
+    	helper.showResult("7 Wonders");
+end
+
+
+rule "Dominion"
+    when
+    	QuestionAndAnswer(question == "Complexity?" && answer == "Less")
+    then
+    	helper.showResult("Dominion");
+end
+
+
+rule "Check strategy before turn"
+    when
+    	QuestionAndAnswer(question == "Card/deck based game?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("Yes");
+	    options.add("No");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Do you like to plan your strategy before your turn?", options);
+	    insert(answer);
+end
+
+rule "Settlers of Catan"
+    when
+    	QuestionAndAnswer(question == "Do you like to plan your strategy before your turn?" && answer == "Yes")
+    then
+    	helper.showResult("Settlers of Catan");
+end
+
+
+rule "Check turns or no downtime"
+    when
+    	QuestionAndAnswer(question == "Do you like to plan your strategy before your turn?" && answer == "No")
+    then
+	    ArrayList<String> options = new ArrayList<>();
+	    options.add("No downtime");
+	    options.add("Turns");
+	    options.add("EXIT");
+	    QuestionAndAnswer answer = helper.ask("Defined turns or no downtime?", options);
+	    insert(answer);
+end
+
+rule "Pillars of the Earth"
+    when
+    	QuestionAndAnswer(question == "Defined turns or no downtime?" && answer == "No downtime")
+    then
+    	helper.showResult("Pillars of the Earth");
+end
+
+
+rule "Carcassonne"
+    when
+    	QuestionAndAnswer(question == "Defined turns or no downtime?" && answer == "Turns")
+    then
+    	helper.showResult("Carcassonne");
+end
