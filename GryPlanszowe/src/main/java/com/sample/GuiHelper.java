@@ -95,45 +95,33 @@ public class GuiHelper {
     }
 
 
-    public QuestionAndAnswer ask(String questionText, ArrayList<String> options) {
-        
-        QuestionAndAnswer currentAnswer = new QuestionAndAnswer(questionText, options.get(0));
+    public String ask(String questionText, ArrayList<String> options) {
+        final String[] selectedAnswer = { options.get(0) };
 
         JPanel panel = new JPanel(new GridLayout(0, 1));
         panel.add(new JLabel(questionText));
 
-        ArrayList<JRadioButton> buttons = new ArrayList<>();
         ButtonGroup group = new ButtonGroup();
+        ArrayList<JRadioButton> buttons = new ArrayList<>();
 
-        class MyListener implements ItemListener {
-            String value;
-            QuestionAndAnswer answer;
-
-            public MyListener(String value, QuestionAndAnswer answer) {
-                this.value = value;
-                this.answer = answer;
-            }
-
-            public void itemStateChanged(ItemEvent event) {
-                if (event.getStateChange() == ItemEvent.SELECTED) {
-                    answer.setAnswer(value);
-                }
-            }
-        }
-
-        for (int i = 0; i < options.size(); i++) {
-            String text = options.get(i);
+        for (String text : options) {
             JRadioButton radioButton = new JRadioButton(text);
-
-            radioButton.addItemListener(new MyListener(text, currentAnswer));
             
-            buttons.add(radioButton);
+            radioButton.addActionListener(e -> {
+                selectedAnswer[0] = text;
+            });
+
+            if (text.equals(options.get(0))) {
+                radioButton.setSelected(true);
+            }
+
             group.add(radioButton);
+            buttons.add(radioButton);
             panel.add(radioButton);
         }
-        buttons.get(0).setSelected(true);
+
         JOptionPane.showConfirmDialog(frame, panel, "Question", JOptionPane.DEFAULT_OPTION);
 
-        return currentAnswer;
+        return selectedAnswer[0];
     }
 }

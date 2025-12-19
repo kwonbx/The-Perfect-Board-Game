@@ -1,973 +1,1169 @@
 package com.sample.rules
 
-import com.sample.QuestionAndAnswer
 import java.util.ArrayList
 import com.sample.GuiHelper
 
 global GuiHelper helper
 
+declare QuestionAndAnswer
+	question: String
+	answer: String
+end
+
 rule "Start"
     when
+    	not QuestionAndAnswer(question == "Are you playing with children?")
     then
         ArrayList options = new ArrayList();
         options.add("Yes");
         options.add("No"); 
         options.add("EXIT");
-        QuestionAndAnswer answer = helper.ask("Are you playing with children?", options);
+        String q = "Are you playing with children?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
         insert(answer);
 end
 
 rule "Check under 7"
     when
-        QuestionAndAnswer(question == "Are you playing with children?" && answer == "Yes")
+        QuestionAndAnswer(question == "Are you playing with children?", answer == "Yes")
+        not QuestionAndAnswer(question == "Younger than 7?")
     then
         ArrayList options = new ArrayList();
         options.add("Yes");
         options.add("No");
         options.add("EXIT");
-        QuestionAndAnswer answer = helper.ask("Younger than 7?", options);
+        String q = "Younger than 7?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
         insert(answer);
 end
 
 rule "Check girls"
     when
-    	QuestionAndAnswer(question == "Younger than 7?" && answer == "Yes")
+        QuestionAndAnswer(question == "Younger than 7?", answer == "Yes")
+        not QuestionAndAnswer(question == "Girly girls only?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Girly girls only?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Girly girls only?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
-
 
 rule "Candy Land"
     when
-    	QuestionAndAnswer(question == "Girly girls only?" && answer == "Yes")
+        QuestionAndAnswer(question == "Girly girls only?", answer == "Yes")
     then
-    	helper.showResult("Candy Land");
+        helper.showResult("Candy Land");
 end
 
 rule "Check rules or fun"
     when
-    	QuestionAndAnswer(question == "Girly girls only?" && answer == "No")
+        QuestionAndAnswer(question == "Girly girls only?", answer == "No")
+        not QuestionAndAnswer(question == "Real rules or just fun?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Rules");
-	    options.add("Fun");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Real rules or just fun?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Rules");
+        options.add("Fun");
+        options.add("EXIT");
+        String q = "Real rules or just fun?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Check fun for adults"
     when
-    	QuestionAndAnswer(question == "Real rules or just fun?" && answer == "Rules")
+        QuestionAndAnswer(question == "Real rules or just fun?", answer == "Rules")
+        not QuestionAndAnswer(question == "Actually fun for adults?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Actually fun for adults?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Actually fun for adults?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Sorry!"
     when
-    	QuestionAndAnswer(question == "Actually fun for adults?" && answer == "Yes")
+        QuestionAndAnswer(question == "Actually fun for adults?", answer == "Yes")
     then
-    	helper.showResult("Sorry!");
+        helper.showResult("Sorry!");
 end
-
 
 rule "Life"
     when
-    	QuestionAndAnswer(question == "Actually fun for adults?" && answer == "No")
+        QuestionAndAnswer(question == "Actually fun for adults?", answer == "No")
     then
-    	helper.showResult("Life");
+        helper.showResult("Life");
 end
-
 
 rule "Check Rube Goldberg"
     when
-    	QuestionAndAnswer(question == "Real rules or just fun?" && answer == "Fun")
+        QuestionAndAnswer(question == "Real rules or just fun?", answer == "Fun")
+        not QuestionAndAnswer(question == "Rube Goldberg?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Rube Goldberg?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Rube Goldberg?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Mouse Trap"
     when
-    	QuestionAndAnswer(question == "Rube Goldberg?" && answer == "Yes")
+        QuestionAndAnswer(question == "Rube Goldberg?", answer == "Yes")
     then
-    	helper.showResult("Mouse Trap");
+        helper.showResult("Mouse Trap");
 end
-
 
 rule "Operation"
     when
-    	QuestionAndAnswer(question == "Rube Goldberg?" && answer == "No")
+        QuestionAndAnswer(question == "Rube Goldberg?", answer == "No")
     then
-    	helper.showResult("Operation");
+        helper.showResult("Operation");
 end
-
 
 rule "Check crushing defeat"
     when
-    	QuestionAndAnswer(question == "Younger than 7?" && answer == "No")
+        QuestionAndAnswer(question == "Younger than 7?", answer == "No")
+        not QuestionAndAnswer(question == "Let them experience crushing defeat?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Let them experience crushing defeat?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Let them experience crushing defeat?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Monopoly"
     when
-    	QuestionAndAnswer(question == "Let them experience crushing defeat?" && answer == "Yes")
+        QuestionAndAnswer(question == "Let them experience crushing defeat?", answer == "Yes")
     then
-    	helper.showResult("Monopoly");
+        helper.showResult("Monopoly");
 end
-
 
 rule "Check portable"
     when
-    	QuestionAndAnswer(question == "Let them experience crushing defeat?" && answer == "No")
+        QuestionAndAnswer(question == "Let them experience crushing defeat?", answer == "No")
+        not QuestionAndAnswer(question == "Portable?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Portable?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Portable?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Yahtzee!"
     when
-    	QuestionAndAnswer(question == "Portable?" && answer == "Yes")
+        QuestionAndAnswer(question == "Portable?", answer == "Yes")
     then
-    	helper.showResult("Yahtzee!");
+        helper.showResult("Yahtzee!");
 end
-
 
 rule "Check one winner or a team"
     when
-    	QuestionAndAnswer(question == "Portable?" && answer == "No")
+        QuestionAndAnswer(question == "Portable?", answer == "No")
+        not QuestionAndAnswer(question == "One winner or a team effort?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("One");
-	    options.add("Team");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("One winner or a team effort?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("One");
+        options.add("Team");
+        options.add("EXIT");
+        String q = "One winner or a team effort?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Small World"
     when
-    	QuestionAndAnswer(question == "One winner or a team effort?" && answer == "One")
+        QuestionAndAnswer(question == "One winner or a team effort?", answer == "One")
     then
-    	helper.showResult("Small World");
+        helper.showResult("Small World");
 end
-
 
 rule "Forbidden Island"
     when
-    	QuestionAndAnswer(question == "One winner or a team effort?" && answer == "Team")
+        QuestionAndAnswer(question == "One winner or a team effort?", answer == "Team")
     then
-    	helper.showResult("Forbidden Island");
+        helper.showResult("Forbidden Island");
 end
-
 
 rule "Check more than two hours"
     when
-    	QuestionAndAnswer(question == "Are you playing with children?" && answer == "No")
+        QuestionAndAnswer(question == "Are you playing with children?", answer == "No")
+        not QuestionAndAnswer(question == "Play for more than two hours?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Play for more than two hours?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Play for more than two hours?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Check hardest rules"
     when
-    	QuestionAndAnswer(question == "Play for more than two hours?" && answer == "Yes")
+        QuestionAndAnswer(question == "Play for more than two hours?", answer == "Yes")
+        not QuestionAndAnswer(question == "Hardest rules ever?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Hardest rules ever?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Hardest rules ever?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Axis and Allies"
     when
-    	QuestionAndAnswer(question == "Hardest rules ever?" && answer == "Yes")
+        QuestionAndAnswer(question == "Hardest rules ever?", answer == "Yes")
     then
-    	helper.showResult("Axis and Allies");
+        helper.showResult("Axis and Allies");
 end
-
 
 rule "Check all players"
     when
-    	QuestionAndAnswer(question == "Hardest rules ever?" && answer == "No")
+        QuestionAndAnswer(question == "Hardest rules ever?", answer == "No")
+        not QuestionAndAnswer(question == "All players in until the end?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("All players in until the end?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "All players in until the end?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Le Havre"
     when
-    	QuestionAndAnswer(question == "All players in until the end?" && answer == "Yes")
+        QuestionAndAnswer(question == "All players in until the end?", answer == "Yes")
     then
-    	helper.showResult("Le Havre");
+        helper.showResult("Le Havre");
 end
-
 
 rule "Check dice or strategy"
     when
-    	QuestionAndAnswer(question == "All players in until the end?" && answer == "No")
+        QuestionAndAnswer(question == "All players in until the end?", answer == "No")
+        not QuestionAndAnswer(question == "Dice battles or 100% strategy?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Strat");
-	    options.add("Dice");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Dice battles or 100% strategy?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Strat");
+        options.add("Dice");
+        options.add("EXIT");
+        String q = "Dice battles or 100% strategy?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Game of Thrones"
     when
-    	QuestionAndAnswer(question == "Dice battles or 100% strategy?" && answer == "Strat")
+        QuestionAndAnswer(question == "Dice battles or 100% strategy?", answer == "Strat")
     then
-    	helper.showResult("Game of Thrones");
+        helper.showResult("Game of Thrones");
 end
-
 
 rule "Risk"
     when
-    	QuestionAndAnswer(question == "Dice battles or 100% strategy?" && answer == "Dice")
+        QuestionAndAnswer(question == "Dice battles or 100% strategy?", answer == "Dice")
     then
-    	helper.showResult("Risk");
+        helper.showResult("Risk");
 end
-
 
 rule "Check huge nerd"
     when
-    	QuestionAndAnswer(question == "Play for more than two hours?" && answer == "No")
+        QuestionAndAnswer(question == "Play for more than two hours?", answer == "No")
+        not QuestionAndAnswer(question == "Are you a huge nerd?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Are you a huge nerd?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Are you a huge nerd?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Check dozens of hours"
     when
-    	QuestionAndAnswer(question == "Are you a huge nerd?" && answer == "Yes")
+        QuestionAndAnswer(question == "Are you a huge nerd?", answer == "Yes")
+        not QuestionAndAnswer(question == "Do you want to spend dozens of hours preparing to play?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Do you want to spend dozens of hours preparing to play?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Do you want to spend dozens of hours preparing to play?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Warhammer"
     when
-    	QuestionAndAnswer(question == "Do you want to spend dozens of hours preparing to play?" && answer == "Yes")
+        QuestionAndAnswer(question == "Do you want to spend dozens of hours preparing to play?", answer == "Yes")
     then
-    	helper.showResult("Warhammer");
+        helper.showResult("Warhammer");
 end
-
 
 rule "Check spending money"
     when
-    	QuestionAndAnswer(question == "Do you want to spend dozens of hours preparing to play?" && answer == "No")
+        QuestionAndAnswer(question == "Do you want to spend dozens of hours preparing to play?", answer == "No")
+        not QuestionAndAnswer(question == "Do you like spending money?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Do you like spending money?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Do you like spending money?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Magic"
     when
-    	QuestionAndAnswer(question == "Do you like spending money?" && answer == "Yes")
+        QuestionAndAnswer(question == "Do you like spending money?", answer == "Yes")
     then
-    	helper.showResult("Magic");
+        helper.showResult("Magic");
 end
-
 
 rule "Check boomer"
     when
-    	QuestionAndAnswer(question == "Do you like spending money?" && answer == "No")
+        QuestionAndAnswer(question == "Do you like spending money?", answer == "No")
+        not QuestionAndAnswer(question == "Does the name boomer give you wet dreams?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Does the name boomer give you wet dreams?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Does the name boomer give you wet dreams?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Battlestar Galactica"
     when
-    	QuestionAndAnswer(question == "Does the name boomer give you wet dreams?" && answer == "Yes")
+        QuestionAndAnswer(question == "Does the name boomer give you wet dreams?", answer == "Yes")
     then
-    	helper.showResult("Battlestar Galactica");
+        helper.showResult("Battlestar Galactica");
 end
-
 
 rule "Cosmic Encounter"
     when
-    	QuestionAndAnswer(question == "Does the name boomer give you wet dreams?" && answer == "No")
+        QuestionAndAnswer(question == "Does the name boomer give you wet dreams?", answer == "No")
     then
-    	helper.showResult("Cosmic Encounter");
+        helper.showResult("Cosmic Encounter");
 end
-
 
 rule "Check everyone get along"
     when
-    	QuestionAndAnswer(question == "Are you a huge nerd?" && answer == "No")
+        QuestionAndAnswer(question == "Are you a huge nerd?", answer == "No")
+        not QuestionAndAnswer(question == "Do you think everyone should just get along?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Do you think everyone should just get along?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Do you think everyone should just get along?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Check dick"
     when
-    	QuestionAndAnswer(question == "Do you think everyone should just get along?" && answer == "Yes")
+        QuestionAndAnswer(question == "Do you think everyone should just get along?", answer == "Yes")
+        not QuestionAndAnswer(question == "Do you secretly wish you were a dick?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Do you secretly wish you were a dick?", options);
-    	insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Do you secretly wish you were a dick?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Arkham Horror"
     when
-    	QuestionAndAnswer(question == "Do you secretly wish you were a dick?" && answer == "Yes")
+        QuestionAndAnswer(question == "Do you secretly wish you were a dick?", answer == "Yes")
     then
-    	helper.showResult("Arkham Horror");
+        helper.showResult("Arkham Horror");
 end
-
 
 rule "Check Monty Python fetish"
     when
-    	QuestionAndAnswer(question == "Do you secretly wish you were a dick?" && answer == "No")
+        QuestionAndAnswer(question == "Do you secretly wish you were a dick?", answer == "No")
+        not QuestionAndAnswer(question == "Do you have a Monty Python Fetish?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Do you have a Monty Python Fetish?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Do you have a Monty Python Fetish?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Shadows over Camelot"
     when
-    	QuestionAndAnswer(question == "Do you have a Monty Python Fetish?" && answer == "Yes")
+        QuestionAndAnswer(question == "Do you have a Monty Python Fetish?", answer == "Yes")
     then
-    	helper.showResult("Shadows over Camelot");
+        helper.showResult("Shadows over Camelot");
 end
-
 
 rule "Check zombies"
     when
-    	QuestionAndAnswer(question == "Do you have a Monty Python Fetish?" && answer == "No")
+        QuestionAndAnswer(question == "Do you have a Monty Python Fetish?", answer == "No")
+        not QuestionAndAnswer(question == "Zombies?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Zombies?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Zombies?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Last Night on Earth"
     when
-    	QuestionAndAnswer(question == "Zombies?" && answer == "Yes")
+        QuestionAndAnswer(question == "Zombies?", answer == "Yes")
     then
-    	helper.showResult("Last Night on Earth");
+        helper.showResult("Last Night on Earth");
 end
-
 
 rule "Check monsters or viruses"
     when
-    	QuestionAndAnswer(question == "Zombies?" && answer == "No")
+        QuestionAndAnswer(question == "Zombies?", answer == "No")
+        not QuestionAndAnswer(question == "Would you rather fight monsters or viruses?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Virus");
-	    options.add("Monster");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Would you rather fight monsters or viruses?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Virus");
+        options.add("Monster");
+        options.add("EXIT");
+        String q = "Would you rather fight monsters or viruses?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Pandemic"
     when
-    	QuestionAndAnswer(question == "Would you rather fight monsters or viruses?" && answer == "Virus")
+        QuestionAndAnswer(question == "Would you rather fight monsters or viruses?", answer == "Virus")
     then
-    	helper.showResult("Pandemic");
+        helper.showResult("Pandemic");
 end
-
 
 rule "Dungeon Run"
     when
-    	QuestionAndAnswer(question == "Would you rather fight monsters or viruses?" && answer == "Monster")
+        QuestionAndAnswer(question == "Would you rather fight monsters or viruses?", answer == "Monster")
     then
-    	helper.showResult("Dungeon Run");
+        helper.showResult("Dungeon Run");
 end
-
 
 rule "Check gamble"
     when
-    	QuestionAndAnswer(question == "Do you think everyone should just get along?" && answer == "No")
+        QuestionAndAnswer(question == "Do you think everyone should just get along?", answer == "No")
+        not QuestionAndAnswer(question == "Do you like to gamble?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Do you like to gamble?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Do you like to gamble?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Rummoli"
     when
-    	QuestionAndAnswer(question == "Do you like to gamble?" && answer == "Yes")
+        QuestionAndAnswer(question == "Do you like to gamble?", answer == "Yes")
     then
-    	helper.showResult("Rummoli");
+        helper.showResult("Rummoli");
 end
-
 
 rule "Check over 50"
     when
-    	QuestionAndAnswer(question == "Do you like to gamble?" && answer == "No")
+        QuestionAndAnswer(question == "Do you like to gamble?", answer == "No")
+        not QuestionAndAnswer(question == "Are you over 50 years old?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Are you over 50 years old?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Are you over 50 years old?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Check more than two"
     when
-    	QuestionAndAnswer(question == "Are you over 50 years old?" && answer == "Yes")
+        QuestionAndAnswer(question == "Are you over 50 years old?", answer == "Yes")
+        not QuestionAndAnswer(question == "More than two of you?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("More than two of you?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "More than two of you?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Cribbage"
     when
-    	QuestionAndAnswer(question == "More than two of you?" && answer == "Yes")
+        QuestionAndAnswer(question == "More than two of you?", answer == "Yes")
     then
-    	helper.showResult("Cribbage");
+        helper.showResult("Cribbage");
 end
-
 
 rule "Check Mensa"
     when
-    	QuestionAndAnswer(question == "More than two of you?" && answer == "No")
+        QuestionAndAnswer(question == "More than two of you?", answer == "No")
+        not QuestionAndAnswer(question == "Are you in Mensa?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Are you in Mensa?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Are you in Mensa?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Check chess"
     when
-    	QuestionAndAnswer(question == "Are you in Mensa?" && answer == "Yes")
+        QuestionAndAnswer(question == "Are you in Mensa?", answer == "Yes")
+        not QuestionAndAnswer(question == "Chess too cliche?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Chess too cliche?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Chess too cliche?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Go"
     when
-    	QuestionAndAnswer(question == "Chess too cliche?" && answer == "Yes")
+        QuestionAndAnswer(question == "Chess too cliche?", answer == "Yes")
     then
-    	helper.showResult("Go");
+        helper.showResult("Go");
 end
-
 
 rule "Chess"
     when
-    	QuestionAndAnswer(question == "Chess too cliche?" && answer == "No")
+        QuestionAndAnswer(question == "Chess too cliche?", answer == "No")
     then
-    	helper.showResult("Chess");
+        helper.showResult("Chess");
 end
-
 
 rule "Backgammon"
     when
-    	QuestionAndAnswer(question == "Are you in Mensa?" && answer == "No")
+        QuestionAndAnswer(question == "Are you in Mensa?", answer == "No")
     then
-    	helper.showResult("Backgammon");
+        helper.showResult("Backgammon");
 end
-
 
 rule "Check party game"
     when
-    	QuestionAndAnswer(question == "Are you over 50 years old?" && answer == "No")
+        QuestionAndAnswer(question == "Are you over 50 years old?", answer == "No")
+        not QuestionAndAnswer(question == "Party game?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Party game?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Party game?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Check get laid"
     when
-    	QuestionAndAnswer(question == "Party game?" && answer == "Yes")
+        QuestionAndAnswer(question == "Party game?", answer == "Yes")
+        not QuestionAndAnswer(question == "Looking to get laid?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Looking to get laid?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Looking to get laid?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Twister"
     when
-    	QuestionAndAnswer(question == "Looking to get laid?" && answer == "Yes")
+        QuestionAndAnswer(question == "Looking to get laid?", answer == "Yes")
     then
-    	helper.showResult("Twister");
+        helper.showResult("Twister");
 end
-
 
 rule "Check embarrass friends"
     when
-    	QuestionAndAnswer(question == "Looking to get laid?" && answer == "No")
+        QuestionAndAnswer(question == "Looking to get laid?", answer == "No")
+        not QuestionAndAnswer(question == "Want to embarrass your friends?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Want to embarrass your friends?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Want to embarrass your friends?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Check thug or artist"
     when
-    	QuestionAndAnswer(question == "Want to embarrass your friends?" && answer == "Yes")
+        QuestionAndAnswer(question == "Want to embarrass your friends?", answer == "Yes")
+        not QuestionAndAnswer(question == "Do you want to be a thug or an artist?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Thug");
-	    options.add("Artist");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Do you want to be a thug or an artist?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Thug");
+        options.add("Artist");
+        options.add("EXIT");
+        String q = "Do you want to be a thug or an artist?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
-rule "Ca$h'N'Gun$"
+rule "CashNGuns"
     when
-    	QuestionAndAnswer(question == "Do you want to be a thug or an artist?" && answer == "Thug")
+        QuestionAndAnswer(question == "Do you want to be a thug or an artist?", answer == "Thug")
     then
-    	helper.showResult("Ca$h'N'Gun$");
+        helper.showResult("Ca$h'N'Gun$");
 end
-
 
 rule "Cranium"
     when
-    	QuestionAndAnswer(question == "Do you want to be a thug or an artist?" && answer == "Artist")
+        QuestionAndAnswer(question == "Do you want to be a thug or an artist?", answer == "Artist")
     then
-    	helper.showResult("Cranium");
+        helper.showResult("Cranium");
 end
-
 
 rule "Check creative liar"
     when
-    	QuestionAndAnswer(question == "Want to embarrass your friends?" && answer == "No")
+        QuestionAndAnswer(question == "Want to embarrass your friends?", answer == "No")
+        not QuestionAndAnswer(question == "Are you a creative liar?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Are you a creative liar?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Are you a creative liar?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Check words or trivia"
     when
-    	QuestionAndAnswer(question == "Are you a creative liar?" && answer == "Yes")
+        QuestionAndAnswer(question == "Are you a creative liar?", answer == "Yes")
+        not QuestionAndAnswer(question == "Words or trivia?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Words");
-	    options.add("Trivia");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Words or trivia?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Words");
+        options.add("Trivia");
+        options.add("EXIT");
+        String q = "Words or trivia?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Beyond Balderdash"
     when
-    	QuestionAndAnswer(question == "Words or trivia?" && answer == "Words")
+        QuestionAndAnswer(question == "Words or trivia?", answer == "Words")
     then
-    	helper.showResult("Beyond Balderdash");
+        helper.showResult("Beyond Balderdash");
 end
-
 
 rule "Wits and Wagers"
     when
-    	QuestionAndAnswer(question == "Words or trivia?" && answer == "Trivia")
+        QuestionAndAnswer(question == "Words or trivia?", answer == "Trivia")
     then
-    	helper.showResult("Wits and Wagers");
+        helper.showResult("Wits and Wagers");
 end
-
 
 rule "Check good with hands"
     when
-    	QuestionAndAnswer(question == "Are you a creative liar?" && answer == "No")
+        QuestionAndAnswer(question == "Are you a creative liar?", answer == "No")
+        not QuestionAndAnswer(question == "Good with your hands?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Good with your hands?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Good with your hands?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Jenga"
     when
-    	QuestionAndAnswer(question == "Good with your hands?" && answer == "Yes")
+        QuestionAndAnswer(question == "Good with your hands?", answer == "Yes")
     then
-    	helper.showResult("Jenga (DK Edition)");
+        helper.showResult("Jenga (DK Edition)");
 end
-
 
 rule "Taboo"
     when
-    	QuestionAndAnswer(question == "Good with your hands?" && answer == "No")
+        QuestionAndAnswer(question == "Good with your hands?", answer == "No")
     then
-    	helper.showResult("Taboo");
+        helper.showResult("Taboo");
 end
-
 
 rule "Check know it all"
     when
-    	QuestionAndAnswer(question == "Party game?" && answer == "No")
+        QuestionAndAnswer(question == "Party game?", answer == "No")
+        not QuestionAndAnswer(question == "Are you a know it all?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Are you a know it all?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Are you a know it all?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Trivial Persuit"
     when
-    	QuestionAndAnswer(question == "Are you a know it all?" && answer == "Yes")
+        QuestionAndAnswer(question == "Are you a know it all?", answer == "Yes")
     then
-    	helper.showResult("Trivial Persuit");
+        helper.showResult("Trivial Persuit");
 end
-
 
 rule "Check straight As"
     when
-    	QuestionAndAnswer(question == "Are you a know it all?" && answer == "No")
+        QuestionAndAnswer(question == "Are you a know it all?", answer == "No")
+        not QuestionAndAnswer(question == "Get straight As?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Get straight As?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Get straight As?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Scrabble"
     when
-    	QuestionAndAnswer(question == "Get straight As?" && answer == "Yes")
+        QuestionAndAnswer(question == "Get straight As?", answer == "Yes")
     then
-    	helper.showResult("Scrabble");
+        helper.showResult("Scrabble");
 end
-
 
 rule "Check train fetish"
     when
-    	QuestionAndAnswer(question == "Get straight As?" && answer == "No")
+        QuestionAndAnswer(question == "Get straight As?", answer == "No")
+        not QuestionAndAnswer(question == "Do you have a train fetish?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Do you have a train fetish?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Do you have a train fetish?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Check economics"
     when
-    	QuestionAndAnswer(question == "Do you have a train fetish?" && answer == "Yes")
+        QuestionAndAnswer(question == "Do you have a train fetish?", answer == "Yes")
+        not QuestionAndAnswer(question == "Do you enjoy economics?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Do you enjoy economics?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Do you enjoy economics?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Steam"
     when
-    	QuestionAndAnswer(question == "Do you enjoy economics?" && answer == "Yes")
+        QuestionAndAnswer(question == "Do you enjoy economics?", answer == "Yes")
     then
-    	helper.showResult("Steam");
+        helper.showResult("Steam");
 end
-
 
 rule "Ticket to Ride"
     when
-    	QuestionAndAnswer(question == "Do you enjoy economics?" && answer == "No")
+        QuestionAndAnswer(question == "Do you enjoy economics?", answer == "No")
     then
-    	helper.showResult("Ticket to Ride");
+        helper.showResult("Ticket to Ride");
 end
 
-
-rule "Chech simple rules"
+rule "Check simple rules"
     when
-    	QuestionAndAnswer(question == "Do you have a train fetish?" && answer == "No")
+        QuestionAndAnswer(question == "Do you have a train fetish?", answer == "No")
+        not QuestionAndAnswer(question == "Simple rules?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Simple rules?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Simple rules?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Check words or tiles"
     when
-    	QuestionAndAnswer(question == "Simple rules?" && answer == "Yes")
+        QuestionAndAnswer(question == "Simple rules?", answer == "Yes")
+        not QuestionAndAnswer(question == "Words or tiles?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Tiles");
-	    options.add("Words");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Words or tiles?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Tiles");
+        options.add("Words");
+        options.add("EXIT");
+        String q = "Words or tiles?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Qwirkle"
     when
-    	QuestionAndAnswer(question == "Words or tiles?" && answer == "Tiles")
+        QuestionAndAnswer(question == "Words or tiles?", answer == "Tiles")
     then
-    	helper.showResult("Qwirkle");
+        helper.showResult("Qwirkle");
 end
-
 
 rule "Scattergories"
     when
-    	QuestionAndAnswer(question == "Words or tiles?" && answer == "Words")
+        QuestionAndAnswer(question == "Words or tiles?", answer == "Words")
     then
-    	helper.showResult("Scattergories");
+        helper.showResult("Scattergories");
 end
-
 
 rule "Check hard choices"
     when
-    	QuestionAndAnswer(question == "Simple rules?" && answer == "No")
+        QuestionAndAnswer(question == "Simple rules?", answer == "No")
+        not QuestionAndAnswer(question == "Constant hard choices?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Constant hard choices?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Constant hard choices?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
-rule "Check farming fetish?"
+rule "Check farming fetish"
     when
-    	QuestionAndAnswer(question == "Constant hard choices?" && answer == "Yes")
+        QuestionAndAnswer(question == "Constant hard choices?", answer == "Yes")
+        not QuestionAndAnswer(question == "Farming fetish?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Farming fetish?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Farming fetish?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Agricola"
     when
-    	QuestionAndAnswer(question == "Farming fetish?" && answer == "Yes")
+        QuestionAndAnswer(question == "Farming fetish?", answer == "Yes")
     then
-    	helper.showResult("Agricola");
+        helper.showResult("Agricola");
 end
-
 
 rule "Check two games"
     when
-    	QuestionAndAnswer(question == "Farming fetish?" && answer == "No")
+        QuestionAndAnswer(question == "Farming fetish?", answer == "No")
+        not QuestionAndAnswer(question == "Do you mind having to buy two games?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Do you mind having to buy two games?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Do you mind having to buy two games?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Check board game geeks"
     when
-    	QuestionAndAnswer(question == "Do you mind having to buy two games?" && answer == "Yes")
+        QuestionAndAnswer(question == "Do you mind having to buy two games?", answer == "Yes")
+        not QuestionAndAnswer(question == "Are all players serious board game geeks?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Are all players serious board game geeks?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Are all players serious board game geeks?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Puerto Rico"
     when
-    	QuestionAndAnswer(question == "Are all players serious board game geeks?" && answer == "Yes")
+        QuestionAndAnswer(question == "Are all players serious board game geeks?", answer == "Yes")
     then
-    	helper.showResult("Puerto Rico");
+        helper.showResult("Puerto Rico");
 end
-
 
 rule "Domaine"
     when
-    	QuestionAndAnswer(question == "Are all players serious board game geeks?" && answer == "No")
+        QuestionAndAnswer(question == "Are all players serious board game geeks?", answer == "No")
     then
-    	helper.showResult("Domaine");
+        helper.showResult("Domaine");
 end
-
 
 rule "Cities and Knights"
     when
-    	QuestionAndAnswer(question == "Do you mind having to buy two games?" && answer == "No")
+        QuestionAndAnswer(question == "Do you mind having to buy two games?", answer == "No")
     then
-    	helper.showResult("Cities and Knights");
+        helper.showResult("Cities and Knights");
 end
-
 
 rule "Check card/deck"
     when
-    	QuestionAndAnswer(question == "Constant hard choices?" && answer == "No")
+        QuestionAndAnswer(question == "Constant hard choices?", answer == "No")
+        not QuestionAndAnswer(question == "Card/deck based game?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Card/deck based game?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Card/deck based game?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Check complexity"
     when
-    	QuestionAndAnswer(question == "Card/deck based game?" && answer == "Yes")
+        QuestionAndAnswer(question == "Card/deck based game?", answer == "Yes")
+        not QuestionAndAnswer(question == "Complexity?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("More");
-	    options.add("Less");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Complexity?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("More");
+        options.add("Less");
+        options.add("EXIT");
+        String q = "Complexity?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "7 Wonders"
     when
-    	QuestionAndAnswer(question == "Complexity?" && answer == "More")
+        QuestionAndAnswer(question == "Complexity?", answer == "More")
     then
-    	helper.showResult("7 Wonders");
+        helper.showResult("7 Wonders");
 end
-
 
 rule "Dominion"
     when
-    	QuestionAndAnswer(question == "Complexity?" && answer == "Less")
+        QuestionAndAnswer(question == "Complexity?", answer == "Less")
     then
-    	helper.showResult("Dominion");
+        helper.showResult("Dominion");
 end
-
 
 rule "Check strategy before turn"
     when
-    	QuestionAndAnswer(question == "Card/deck based game?" && answer == "No")
+        QuestionAndAnswer(question == "Card/deck based game?", answer == "No")
+        not QuestionAndAnswer(question == "Do you like to plan your strategy before your turn?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("Yes");
-	    options.add("No");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Do you like to plan your strategy before your turn?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("Yes");
+        options.add("No");
+        options.add("EXIT");
+        String q = "Do you like to plan your strategy before your turn?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Settlers of Catan"
     when
-    	QuestionAndAnswer(question == "Do you like to plan your strategy before your turn?" && answer == "Yes")
+        QuestionAndAnswer(question == "Do you like to plan your strategy before your turn?", answer == "Yes")
     then
-    	helper.showResult("Settlers of Catan");
+        helper.showResult("Settlers of Catan");
 end
-
 
 rule "Check turns or no downtime"
     when
-    	QuestionAndAnswer(question == "Do you like to plan your strategy before your turn?" && answer == "No")
+        QuestionAndAnswer(question == "Do you like to plan your strategy before your turn?", answer == "No")
+        not QuestionAndAnswer(question == "Defined turns or no downtime?")
     then
-	    ArrayList<String> options = new ArrayList<>();
-	    options.add("No downtime");
-	    options.add("Turns");
-	    options.add("EXIT");
-	    QuestionAndAnswer answer = helper.ask("Defined turns or no downtime?", options);
-	    insert(answer);
+        ArrayList options = new ArrayList();
+        options.add("No downtime");
+        options.add("Turns");
+        options.add("EXIT");
+        String q = "Defined turns or no downtime?";
+        String a = helper.ask(q, options);
+        QuestionAndAnswer answer = new QuestionAndAnswer();
+        answer.setQuestion(q);
+        answer.setAnswer(a);
+        insert(answer);
 end
 
 rule "Pillars of the Earth"
     when
-    	QuestionAndAnswer(question == "Defined turns or no downtime?" && answer == "No downtime")
+        QuestionAndAnswer(question == "Defined turns or no downtime?", answer == "No downtime")
     then
-    	helper.showResult("Pillars of the Earth");
+        helper.showResult("Pillars of the Earth");
 end
-
 
 rule "Carcassonne"
     when
-    	QuestionAndAnswer(question == "Defined turns or no downtime?" && answer == "Turns")
+        QuestionAndAnswer(question == "Defined turns or no downtime?", answer == "Turns")
     then
-    	helper.showResult("Carcassonne");
+        helper.showResult("Carcassonne");
 end
